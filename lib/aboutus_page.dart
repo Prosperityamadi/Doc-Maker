@@ -111,7 +111,7 @@ class AboutUsPage extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              'Prince Yeboah - CSC/22/01/0489\nEnoch Tagoe - CSC/22/01/1084\nFrancis Danso Aboagye - CSC/22/01/1803\nIsaac Kodom Boateng - CSC/22/01/1707',
+              'Prince Yeboah - CSC/22/01/0489\nEnoch Tagoe - CSC/22/01/1084\nFrancis Danso Aboagye - CSC/22/01/1803\nIsaac Kodom Boateng - CSC/22/01/1707\nProsperity Amadi - CSC/22/01/1736',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 32),
