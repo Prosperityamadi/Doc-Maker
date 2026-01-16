@@ -44,14 +44,14 @@
 //   }
 // }
 
-import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:noteapp/main_screen.dart'; // Changed from homepage to main_screen
+import 'package:noteapp/main_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,8 +65,6 @@ void main() async {
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
 
   runApp(MyApp(savedThemeMode: savedThemeMode));
-  final path = await getDatabasesPath();
-  debugPrint('DB path: $path');
 }
 
 class MyApp extends StatelessWidget {
@@ -78,13 +76,72 @@ class MyApp extends StatelessWidget {
     return AdaptiveTheme(
       light: ThemeData(
         brightness: Brightness.light,
-        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.white,
+        cardTheme: CardTheme(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: Colors.grey.shade200),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          color: Colors.white,
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          iconTheme: IconThemeData(color: Colors.black87),
+          titleTextStyle: TextStyle(
+            color: Colors.black87,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        textTheme: GoogleFonts.interTextTheme(ThemeData.light().textTheme)
+            .copyWith(
+              titleLarge: GoogleFonts.lora(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+              bodyLarge: GoogleFonts.inter(fontSize: 16, height: 1.5),
+            ),
         useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.black,
+          primary: Colors.black,
+          secondary: Colors.grey.shade800,
+          surface: Colors.white,
+        ),
       ),
       dark: ThemeData(
         brightness: Brightness.dark,
-        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: const Color(0xFF191919), // Soft black
+        cardTheme: CardTheme(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: Colors.grey.shade800),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          color: const Color(0xFF202020),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF191919),
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          iconTheme: IconThemeData(color: Colors.white70),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
         useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.white,
+          brightness: Brightness.dark,
+          surface: const Color(0xFF191919),
+        ),
       ),
       initial: savedThemeMode ?? AdaptiveThemeMode.light,
       builder: (theme, darkTheme) => MaterialApp(
@@ -94,11 +151,10 @@ class MyApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           FlutterQuillLocalizations.delegate,
         ],
-        title: 'Simple Editor',
+        title: 'Hyper Docs',
         theme: theme,
         darkTheme: darkTheme,
-        home:
-            const MainScreen(), // Changed from HomePage to MainScreen
+        home: const MainScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
